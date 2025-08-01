@@ -1,0 +1,131 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fall Detection</title>
+    <link rel="icon" href="{% static 'ref.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white flex flex-col overflow-x-hidden overflow-y-auto">
+
+    <!-- Navbar -->
+    <nav class="w-full flex items-center justify-between px-8 py-6">
+        <div><img src="{% static 'logoo.png' %}" alt="IVSS Logo" class="h-20"></div>
+        <ul class="flex space-x-6 font-medium text-lg">
+            <li><a href="{% url 'index' %}" class="hover:text-blue-300">Home</a></li>
+            <li><a href="{% url 'algorithms_view' %}" class="hover:text-blue-300">Algorithms</a></li>
+            <li><a href="#" class="hover:text-blue-300">Contact</a></li>
+            <li><a href="https://github.com/manoj9901811?tab=repositories" class="hover:text-blue-300">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex-grow flex flex-col items-center justify-start px-4 text-center">
+        <h2 class="text-4xl sm:text-5xl font-bold mb-6">FALL <span class="text-yellow-300">DETECTION</span></h2>
+        <p class="text-lg sm:text-xl mb-10">Paste a URL or upload a file to detect human falls in the video.</p>
+
+        <!-- Upload Form -->
+        {% if not video %}
+        <div id="form-fields" class="w-full max-w-xl bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-lg shadow-lg">
+            <form id="fall-form" method="post" enctype="multipart/form-data" class="space-y-6" onsubmit="startProgressBar(event)">
+                {% csrf_token %}
+
+                <div class="text-left">
+                    <label class="block text-white font-semibold mb-2">Paste URL or Upload a Video File</label>
+                    <div class="flex flex-col sm:flex-row items-stretch gap-4">
+                        <!-- URL Input -->
+                        {{ form.video_url|add_class:"flex-grow px-4 py-2 rounded text-gray-800 bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" }}
+
+                        <!-- File Input -->
+                        <label class="w-full sm:w-auto flex items-center justify-center bg-white text-indigo-600 font-semibold px-4 py-2 rounded-md shadow cursor-pointer hover:bg-gray-100 transition">
+                            <span>Choose File</span>
+                            {{ form.video_file }}
+                        </label>
+                    </div>
+
+                    {% if form.video_url.errors %}
+                        <p class="text-red-400 text-sm mt-1">{{ form.video_url.errors|join:", " }}</p>
+                    {% endif %}
+                    {% if form.video_file.errors %}
+                        <p class="text-red-400 text-sm mt-1">{{ form.video_file.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md shadow-md font-semibold transition">
+                    Detect Fall
+                </button>
+            </form>
+        </div>
+        
+        {% endif %}
+
+        <!-- Progress Bar -->
+        <div id="progress-container" class="hidden mt-10 w-full max-w-xl">
+            <p id="progress-text" class="text-xl font-semibold mb-4">Processing Video... Please wait.</p>
+            <div class="w-full bg-white rounded-full h-3 overflow-hidden">
+                <div id="progress-bar" class="h-3 bg-indigo-600 rounded-full transition-all duration-500 ease-out" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        {% if video %}
+        <div class="mt-10 w-full max-w-3xl">
+            <p class="mb-4 text-lg font-semibold"><strong>Detection Result:</strong> {{ video.result }}</p>
+            {% if video.processed_video %}
+            <div class="w-full aspect-video rounded-lg overflow-hidden">
+                <video width="100%" height="auto" controls class="rounded shadow-lg object-contain w-full h-full">
+                    <source src="{{ video.processed_video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            {% else %}
+            <p class="text-red-300">Processed video not available.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function startProgressBar(event) {
+            event.preventDefault();
+
+            // Hide form and show progress bar
+            document.getElementById("form-fields").style.display = "none";
+            document.getElementById("progress-container").classList.remove("hidden");
+
+            const progressBar = document.getElementById("progress-bar");
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width < 95) {
+                    width += 1;
+                    progressBar.style.width = width + "%";
+                } else {
+                    clearInterval(interval);
+                }
+            }, 100);
+
+            // Submit form to backend
+            document.getElementById("fall-form").submit();
+        }
+
+        window.onload = () => {
+            const fileInput = document.querySelector("input[type='file']");
+            if (fileInput) {
+                fileInput.classList.add("hidden");
+            }
+
+            {% if video %}
+                document.getElementById("form-fields")?.remove();
+                document.getElementById("progress-container")?.classList.add("hidden");
+            {% endif %}
+        };
+    </script>
+<footer class="text-center py-6 text-white text-sm opacity-70">
+    Proactive Situational Surveillance System • by Manoj Somanna
+  </footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fall Detection Result</title>
+</head>
+<body>
+    <h1>Fall Detection Result</h1>
+    <p><strong>Input URL:</strong> <a href="{{ video.video_url }}" target="_blank">{{ video.video_url }}</a></p>
+    <p><strong>Detection Result:</strong> {{ video.result }}</p>
+
+    {% if video.processed_video %}
+    <video width="640" height="360" controls>
+    <source src="{{ video.processed_video.url }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+    {% else %}
+    <p>No processed video available.</p>
+    {% endif %}
+
+    <br><br>
+    <a href="{% url 'upload_video' %}">Upload Another Video</a>
+</body>
+</html>

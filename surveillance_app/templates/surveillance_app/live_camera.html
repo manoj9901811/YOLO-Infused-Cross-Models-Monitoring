@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Fall Detection</title>
+    <link rel="icon" href="{% static 'ref.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white flex flex-col overflow-x-hidden overflow-y-auto">
+
+    <!-- Navbar -->
+    <nav class="w-full flex items-center justify-between px-8 py-6">
+        <div><img src="{% static 'logoo.png' %}" alt="IVSS Logo" class="h-20"></div>
+        <ul class="flex space-x-6 font-medium text-lg">
+            <li><a href="{% url 'index' %}" class="hover:text-blue-300">Home</a></li>
+            <li><a href="{% url 'algorithms_view' %}" class="hover:text-blue-300">Algorithms</a></li>
+            <li><a href="#" class="hover:text-blue-300">Contact</a></li>
+            <li><a href="https://github.com/manoj9901811?tab=repositories" class="hover:text-blue-300">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex-grow flex flex-col items-center justify-start px-4 text-center pt-10 sm:pt-16">
+        <h2 class="text-4xl sm:text-5xl font-bold mb-4">LIVE FALL <span class="text-yellow-300">DETECTION</span></h2>
+        <p class="text-lg sm:text-xl mb-8 max-w-3xl">Monitor real-time human activity through live camera with automatic fall alerts.</p>
+
+        <!-- Live Stream Frame -->
+        <div class="w-full max-w-5xl aspect-video rounded-xl overflow-hidden shadow-2xl border-4 border-white/30 mb-6">
+            <img src="{% url 'detect_fall_live' %}" alt="Live Fall Stream" class="w-full h-full object-cover" />
+        </div>
+
+        <p class="text-sm text-white/80">Note: This live feed refreshes continuously for real-time monitoring.</p>
+    </div>
+
+</body>
+</html>

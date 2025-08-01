@@ -1,0 +1,83 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proactive Situational Surveillance System</title>
+    <link rel="icon" href="{% static 'ref.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+
+    <!-- Navigation Bar -->
+    <nav class="w-full flex items-center justify-between px-8 py-6 bg-transparent text-white">
+        <div class="flex items-center">
+            <img src="{% static 'logoo.png' %}" alt="IVSS Logo" class="h-20 object-contain">
+        </div>
+        <ul class="flex space-x-6 font-medium text-lg">
+            <li><a href=" " class="hover:text-blue-300">Home</a></li>
+            <li><a href="{% url 'algorithms_view' %}" class="hover:text-blue-300">Algorithms</a></li>
+            <li><a href="#" class="hover:text-blue-300">Contact</a></li>
+            <li><a href="https://github.com/manoj9901811?tab=repositories" class="hover:text-blue-300">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="flex-grow flex flex-col items-center justify-center text-center text-white px-4">
+        <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+            PROACTIVE SITUATIONAL <span class="text-yellow-300">SURVEILLANCE SYSTEM</span>
+        </h2>
+        <p class="text-lg sm:text-xl mb-8 max-w-2xl">
+            AI-driven surveillance that sees, understands, and protects — instantly.
+        </p>
+    </div>
+
+    <!-- Rectangle Container for Models -->
+    <section class="w-full flex justify-center pb-20 px-4">
+        <div class="w-full max-w-7xl bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-10">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-10">AI-Powered Modules</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Fall Detection -->
+                <div class="bg-gradient-to-br from-pink-400 to-pink-600 text-white p-6 rounded-xl shadow-lg transition hover:scale-105">
+                    <h3 class="text-xl font-bold mb-2">Fall Detection</h3>
+                    <p class="text-sm mb-4">Detects human falls in real-time to ensure safety.</p>
+                    <a href="{% url 'upload_video' %}" class="inline-block bg-white text-pink-600 px-4 py-2 rounded hover:bg-pink-100 transition font-semibold">Try Now</a>
+                </div>
+
+                <!-- Vehicle Crash -->
+                <div class="bg-gradient-to-br from-orange-400 to-orange-600 text-white p-6 rounded-xl shadow-lg transition hover:scale-105">
+                    <h3 class="text-xl font-bold mb-2">Vehicle Crash</h3>
+                    <p class="text-sm mb-4">Identifies vehicular collisions instantly for alerting.</p>
+                    <a href="{% url 'upload_crash' %}" class="inline-block bg-white text-orange-600 px-4 py-2 rounded hover:bg-orange-100 transition font-semibold">Detect Crash</a>
+                </div>
+
+                <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 text-white p-6 rounded-xl shadow-lg transition hover:scale-105">
+    <h3 class="text-xl font-bold mb-2">Live Fall Detection</h3>
+    <p class="text-sm mb-4">Monitors falls in real-time using webcam.</p>
+    <a href="{% url 'live_camera' %}" class="inline-block bg-white text-red-700 px-4 py-2 rounded hover:bg-red-100 transition font-semibold">Watch Live</a>
+</div>
+
+                <!-- Object Tracking -->
+                <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 text-white p-6 rounded-xl shadow-lg transition hover:scale-105">
+                    <h3 class="text-xl font-bold mb-2">Object Tracking</h3>
+                    <p class="text-sm mb-4">Tracks people or objects with high accuracy.</p>
+<a href="{% url 'object_tracking_view' %}" class="inline-block bg-white text-indigo-700 px-4 py-2 rounded hover:bg-indigo-100 transition font-semibold">Track Now</a>
+                </div>
+
+                <!-- Social Distance -->
+                <div class="bg-gradient-to-br from-teal-400 to-teal-600 text-white p-6 rounded-xl shadow-lg transition hover:scale-105">
+                    <h3 class="text-xl font-bold mb-2">Social Distance</h3>
+                    <p class="text-sm mb-4">Monitors spacing between individuals in real time.</p>
+                    <a href="#" class="inline-block bg-white text-teal-600 px-4 py-2 rounded hover:bg-teal-100 transition font-semibold">Monitor</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+<footer class="text-center py-6 text-white text-sm opacity-70">
+    Proactive Situational Surveillance System • by Manoj Somanna
+  </footer>
+</body>
+</html>

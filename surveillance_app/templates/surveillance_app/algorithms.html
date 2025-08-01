@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" x-data="{ showModal: null }" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Fall Detection Algorithms – IVSS</title>
+  <link rel="icon" href="{% static 'ref.png' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white flex flex-col overflow-x-hidden">
+
+  <!-- Navbar -->
+  <nav class="w-full flex items-center justify-between px-8 py-6">
+    <div><img src="{% static 'logoo.png' %}" alt="IVSS Logo" class="h-20"></div>
+    <ul class="flex space-x-6 font-medium text-lg">
+      <li><a href="{% url 'index' %}" class="hover:text-blue-300">Home</a></li>
+      <li><a href="{% url 'algorithms_view' %}" class="hover:text-blue-300">Algorithms</a></li>
+      <li><a href="#" class="hover:text-blue-300">Contact</a></li>
+      <li><a href="https://github.com/manoj9901811?tab=repositories" class="hover:text-blue-300">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <div class="flex-grow flex flex-col items-center justify-center text-center text-white px-4">
+        <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+            MODULE'S <span class="text-yellow-300">ALGORITHMS</span>
+        </h2>
+        <p class="text-lg sm:text-xl mb-8 max-w-2xl">
+            AI-powered surveillance that detects, understands, and responds to human and vehicle behavior in real time.
+        </p>
+    </div>
+  <!-- Main Content -->
+  <section class="px-4 py-12 sm:px-8 md:px-16 lg:px-24 xl:px-32">
+
+
+    <!-- CARD CONTAINER -->
+    <div class="w-full max-w-7xl mx-auto bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-10">
+      <h3 class="text-white text-3xl font-semibold mb-8 text-center text-yellow-300">Fall Detection Algorithms</h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+
+        <!-- YOLO -->
+        <div @click="showModal = 'yolo'"
+             class="cursor-pointer bg-gradient-to-br from-purple-500 to-indigo-700 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300">
+          <h4 class="text-xl font-bold mb-4">YOLOv5 / YOLOv8 + Aspect Ratio</h4>
+          <p class="text-sm leading-relaxed">Detects humans using YOLO and flags falls when height-to-width ratio drops.</p>
+        </div>
+
+        <!-- MediaPipe -->
+        <div @click="showModal = 'mediapipe'"
+             class="cursor-pointer bg-gradient-to-br from-yellow-600 to-orange-500 text-white p-6 rounded-2xl shadow-lg hover:scale-105 transition duration-300">
+          <h4 class="text-xl font-bold mb-4">MediaPipe Pose + Angle Analysis</h4>
+          <p class="text-sm leading-relaxed">Estimates body landmarks and computes posture angles to detect falls.</p>
+        </div>
+
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- MODALS -->
+
+  <!-- MediaPipe Modal -->
+  <div x-cloak x-show="showModal === 'mediapipe'" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 px-4">
+    <div class="relative bg-white text-black rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl p-8">
+      <button @click="showModal = null" class="absolute top-4 right-4 text-black text-2xl font-bold hover:text-red-600">&times;</button>
+      <h2 class="text-3xl font-bold mb-4 text-center text-orange-600">MediaPipe Pose + Angle Analysis</h2>
+      <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+        <img src="https://learnopencv.com/wp-content/uploads/2022/02/mediapipe-series-hand-solutions-graph-2.jpg"
+             alt="MediaPipe Diagram" class="w-full md:w-1/2 rounded-lg shadow-md">
+        <div class="text-base leading-relaxed space-y-4">
+          <p><strong>Purpose:</strong> Detect posture using keypoint estimation to identify falls.</p>
+          <p><strong>How It Works:</strong></p>
+          <ul class="list-disc list-inside">
+            <li>MediaPipe detects body landmarks (shoulders, hips, knees).</li>
+            <li>Angles between joints are calculated (e.g. torso-hip, hip-knee).</li>
+            <li>If body is horizontal or angles are too shallow, fall is flagged.</li>
+          </ul>
+          <p><strong>Benefits:</strong></p>
+          <ul class="list-disc list-inside">
+            <li>Fast, real-time & lightweight (ideal for mobile/edge devices).</li>
+            <li>No need for training or large models.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YOLO Modal -->
+  <div x-cloak x-show="showModal === 'yolo'" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 px-4">
+    <div class="relative bg-white text-black rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl p-8">
+      <button @click="showModal = null" class="absolute top-4 right-4 text-black text-2xl font-bold hover:text-red-600">&times;</button>
+      <h2 class="text-3xl font-bold mb-4 text-center text-purple-700">YOLO + Aspect Ratio</h2>
+      <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+        <img src="https://www.mdpi.com/futureinternet/futureinternet-16-00472/article_deploy/html/images/futureinternet-16-00472-g002-550.jpg"
+             alt="YOLO Diagram" class="w-full md:w-1/2 rounded-lg shadow-md">
+        <div class="text-base leading-relaxed space-y-4">
+          <p><strong>Purpose:</strong> Use object detection to detect people and determine posture.</p>
+          <p><strong>How It Works:</strong></p>
+          <ul class="list-disc list-inside">
+            <li>YOLOv5/8 detects people in video frames.</li>
+            <li>Aspect ratio (height/width) of bounding box is monitored.</li>
+            <li>Fall is flagged if ratio drops (e.g. below 0.75).</li>
+          </ul>
+          <p><strong>Benefits:</strong></p>
+          <ul class="list-disc list-inside">
+            <li>High-speed and accurate object detection.</li>
+            <li>Can be combined with tracking or SAR logic.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-white text-sm opacity-70 mt-10">
+    Proactive Situational Surveillance System • by Manoj Somanna
+  </footer>
+
+  <!-- Icons -->
+  <script>feather.replace();</script>
+
+</body>
+</html>
